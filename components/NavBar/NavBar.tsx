@@ -3,7 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import logo from "@/public/orange-logo.png"
-import { MdArrowOutward } from "react-icons/md";
+import { IoIosLogOut } from "react-icons/io";
+
 
 
 const NavBar = () => {
@@ -34,8 +35,8 @@ const NavBar = () => {
         </Link>
 
         <Link href={'/login'} className='p-2 flex items-center bg-[#f9f3e6]  hover:text-[#f15200] justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md px-3 !py-1 gap-1 bg-button text-primary border-[1px] border-[#e9d4b9] hover:bg-button hover:text-brand'>
-          Login
-          <MdArrowOutward />
+            Logout
+          <IoIosLogOut />
         </Link>
        </div>
     </div>

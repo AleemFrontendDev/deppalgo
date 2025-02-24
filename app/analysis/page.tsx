@@ -23,6 +23,31 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useState } from "react";
+import lines from "@/public/lines.svg"
+import Image from 'next/image';
+
+
+const chartData = [
+  { month: "Gold", desktop: 186, mobile: 80 },
+  { month: "Sukuk", desktop: 305, mobile: 200 },
+  { month: "Shariah", desktop: 237, mobile: 120 },
+  { month: "Islamic", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "JunGolde", desktop: 214, mobile: 140 },
+];
+
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "hsl(var(--chart-1))",
+  },
+  mobile: {
+    label: "Mobile",
+    color: "hsl(var(--chart-2))",
+  },
+};
+
 
 const topAssets = [
   {
@@ -115,6 +140,14 @@ const performanceData = [
 ];
 
 export default function Dashboard() {
+
+  const [isActive, setIsActive] = useState(false);
+
+  const clickHandler = () => {
+    setIsActive(!isActive);
+  };
+
+
   return (
     <div className="p-8 bg-[#fafafa] min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-center font-serif">
@@ -197,34 +230,48 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Asset Category Performance</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={{
-                performance: {
-                  label: "Performance Score",
-                  color: "hsl(24, 100%, 50%)",
-                },
-              }}
-              className="h-[300px]"
-            >
-              <BarChart
-                data={performanceData}
-                layout="vertical"
-                margin={{ top: 20, right: 20, bottom: 20, left: 100 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis type="category" dataKey="category" />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="performance" fill="var(--color-performance)" />
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+        <div className='flex flex-col gap-10 items-center justify-center'>
+          <button
+            className={`w-40 h-12 border-2 border-[#e9d4b9] rounded-lg ${
+              isActive ? "bg-red-600 text-white" : "bg-green-500 text-white"
+            }`}
+            onClick={clickHandler}
+          >
+            {isActive ? "Stop" : "Start"}
+          </button>
+          <Card className=''>
+            <CardContent>
+              {isActive ? (
+                <ChartContainer config={chartConfig}>
+                  <BarChart data={chartData}>
+                    <CartesianGrid vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tickLine={false}
+                      tickMargin={10}
+                      axisLine={false}
+                      tickFormatter={(value) => value.slice(0, 3)}
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent indicator="dashed" />}
+                    />
+                    <Bar dataKey="desktop" fill="#f15200" radius={4} />
+                    <Bar dataKey="mobile" fill="#e8c468" radius={4} />
+                  </BarChart>
+                </ChartContainer>
+              ) : (
+                <div className="relative flex items-center justify-center h-96 text-lg text-gray-500">
+                  Press start button to display analysis
+                  <div className='hello absolute bottom-0 w-full -z-10'>
+                    <Image src={lines} alt='' width={100}  height={100} className='w-full h-full object-cover filter invert opacity-50' />
+                </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
       </div>
     </div>
   );
