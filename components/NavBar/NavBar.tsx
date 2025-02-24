@@ -26,7 +26,7 @@ const NavBar = () => {
   return (
     <div className={`w-full min-h-[40px] fixed z-50 top-0 px-6 lg:px-16 py-2 bg-[#FAFAF990] border-b-[0.5px] ${scrolled ? 'border-zinc-100 backdrop-filter backdrop-blur-sm' : ''}`}>
        <div className='flex items-center justify-between'>
-       <Link href={''} className='flex items-end gap-2'>
+       <Link href={'/dashboard'} className='flex items-end gap-2'>
           <div className='bg-[#f15200] w-[50px] h-[50px] rounded-lg overflow-hidden'>
               <Image src={logo} alt='Logo' width={60} height={50} />
           </div>

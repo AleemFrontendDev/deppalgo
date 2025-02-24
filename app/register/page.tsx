@@ -20,9 +20,9 @@ const Register = () => {
             <h2 className='md:text-3xl lg:text-[40px] font-semibold text-white'>
                 Trade, track and manage brokers on DeepAlgo. 
             </h2>
-            <Image src={lines} alt='' width={100}  height={100} className='absolute left-0 bottom-0 w-full filter invert opacity-50' />
-            <h4 className='text-4xl font-bold text-white absolute bottom-10'>
-                Stocks.
+            <Image src={lines} alt='' width={100}  height={100} className='absolute left-0 bottom-0 w-full filter invert opacity-30' />
+            <h4 className='text-4xl font-bold text-white absolute bottom-10 capitalize'>
+                stocks. forex. bonds. indices. commodities
             </h4>
         </div>
         <div className='right-side sm:w-full lg:w-[500px]'>
@@ -35,7 +35,7 @@ const Register = () => {
             <div className='my-2'>
                 <h3 className='text-xl md:text-4xl font-semibold text-[#333] mb-2'>Create an account</h3>
                 <p className='text-[12px] sm:text-sm text-gray-500 font-light'>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat id perspiciatis facere quos vitae labore inventore tenetur.
+                Join DeepAlgo and unlock the power of AI-driven trading. Automate strategies, track trends, and stay ahead in the market.
                 </p>
             </div>
             <div className='flex flex-col sm:flex-row gap-3 w-full'>
@@ -72,8 +72,7 @@ const Register = () => {
                     >
                       {showConfirmPassword ? <LuEyeOff/> : <IoEyeOutline/>}
                     </span>
-               </div>
-            </div>
+               </div>            </div>
             <div className='flex items-center gap-2 my-4'>
                 <input type="checkbox" name="" id="terms" className='accent-[#f15200] w-5 h-5 rounded-xl border-2' />
                 <label htmlFor='terms' className='text-sm select-none'>

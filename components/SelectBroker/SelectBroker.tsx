@@ -8,6 +8,12 @@ import PopUpModal from '../PopUpModal/PopUpModal'
 const SelectBroker = () => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [values, setValues] = useState('')
+
+    const clickHandler = (val : string) => {
+      setValues(val)
+      setIsOpen(true)
+    }
 
     useEffect(() => {
       if (isOpen) {
@@ -33,7 +39,7 @@ const SelectBroker = () => {
             </div>
             <div className='w-[450px] border-2 rounded-xl p-5 grid grid-cols-2 gap-5'>
                 <div className='flex flex-col border-2 rounded-xl'
-                onClick={() => setIsOpen(true)}
+                onClick={() => clickHandler('oanda')}
                 >
                     <div className='flex items-center justify-center border-b-2 h-16'>
                         <Image src={oanda} alt='Oanda-logo' width={150} height={100} />
@@ -41,7 +47,7 @@ const SelectBroker = () => {
                     <div className='p-2'><h3>Oanda</h3></div>
                 </div>
                 <div className='flex flex-col border-2 rounded-xl'
-                onClick={() => setIsOpen(true)}
+                onClick={() => clickHandler('ig')}
                 >
                     <div className='flex items-center justify-center border-b-2 h-16 '>
                         <h3 className='text-3xl'>IG</h3>
@@ -50,7 +56,7 @@ const SelectBroker = () => {
                 </div>
             </div>
         </div>
-        <PopUpModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        <PopUpModal isOpen={isOpen} setIsOpen={setIsOpen} values={values}/>
     </>
   )
 }

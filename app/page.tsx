@@ -1,14 +1,7 @@
-import SelectBroker from '@/components/SelectBroker/SelectBroker'
-import React from 'react'
 
-const Home = () => {
-  return (
-    <div className='w-full h-full'>
-        <div className='w-full flex flex-col items-center justify-center'>
-          <SelectBroker/>
-        </div>
-    </div>
-  )
+'use client'
+import { redirect } from "next/navigation";
+
+export default function Home() {
+  redirect("/login");
 }
-
-export default Home
