@@ -9,6 +9,7 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  ResponsiveContainer,
 } from "recharts";
 import {
   Table,
@@ -207,144 +208,143 @@ export default function Dashboard() {
     setIsActive(!isActive);
   };
   return (
-    <>
-    <div className='flex items-center justify-between px-12'>
-      <TradingControls />   
-    <div className='pr-[5px]'>
-        <button
-          className={`w-40 h-12 border-2 rounded-lg ${
-            isActive ? "bg-red-500 text-white" : "bg-green-500 text-white"
-          }`}
-          onClick={clickHandler}
-        >
-          {isActive ? "Stop Traiding" : "Start Traiding"}
-        </button></div>
-    </div>
-    <div className='my-10 flex flex-col gap-10 items-center justify-center'>
-        <Card>
-          <CardContent className='p-0'>
-              <div className="p-6 bg-[#fafafa] min-h-screen">
-              <h1 className="text-3xl font-bold mb-6 text-center ">
-                Leader Board
-              </h1>
-        
-              <div className="mb-8">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Top 10 Rankings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Rank</TableHead>
-                          <TableHead>Rank Change</TableHead>
-                          <TableHead>User Name</TableHead>
-                          <TableHead>Profit/Loss $</TableHead>
-                          <TableHead>Win Ratio (%)</TableHead>
-                          <TableHead>Trades</TableHead>
-                          <TableHead>Risk</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {topAssets.map((asset) => (
-                          <TableRow key={asset.rank}>
-                            <TableCell>{asset.rank}</TableCell>
-
-                            {/* Here’s where we call the utility function */}
-                            <TableCell>{getRankChangeIndicator({ rankChange: asset.rankChange })}</TableCell>
-
-                            <TableCell>{asset.username}</TableCell>
-                            <TableCell className="text-emerald-600">
-                              {asset.profitLoss}
-                            </TableCell>
-                            <TableCell>{asset.winRate}</TableCell>
-                            <TableCell>{asset.trades}</TableCell>
-                            <TableCell>{asset.risk}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-              </div>
-        
-              <div className="grid md:grid-cols-2 gap-8">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Weekly Performance Comparison</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer
-                      config={{
-                        gold: {
-                          label: "Gold Assets",
-                          color: "hsl(24, 100%, 50%)",
-                        },
-                        islamic: {
-                          label: "Finance Assets ",
-                          color: "hsl(16, 100%, 50%)",
-                        },
-                      }}
-                      className="h-[300px]"
-                    >
-                      <LineChart
-                        data={monthlyData}
-                        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Line
-                          type="monotone"
-                          dataKey="gold"
-                          stroke="var(--color-gold)"
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="islamic"
-                          stroke="var(--color-islamic)"
-                        />
-                      </LineChart>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
-        
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Weekly Asset Performance</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer
-                      config={{
-                        performance: {
-                          label: "Performance Score",
-                          color: "hsl(24, 100%, 50%)",
-                        },
-                      }}
-                      className="h-[300px]"
-                    >
-                      <BarChart
-                        data={performanceData}
-                        layout="vertical"
-                        margin={{ top: 20, right: 20, bottom: 20, left: 100 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis type="number" />
-                        <YAxis type="category" dataKey="category" />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="performance" fill="var(--color-performance)" />
-                      </BarChart>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <div className='w-full h-full'>
+      <div className='flex flex-col md:flex-row items-center justify-between px-12'>
+        <TradingControls />   
+      <div className='pr-[5px]'>
+          <button
+            className={`w-40 h-12 border-2 rounded-lg ${
+              isActive ? "bg-red-500 text-white" : "bg-green-500 text-white"
+            }`}
+            onClick={clickHandler}
+          >
+            {isActive ? "Stop Traiding" : "Start Traiding"}
+          </button></div>
       </div>
-    
-    </>
+      <div className='my-10 flex flex-col gap-10 items-center justify-center'>
+          <Card className='w-full'>
+            <CardContent className='p-0'>
+                <div className="p-6 bg-[#fafafa] min-h-screen">
+                <h1 className="text-3xl font-bold mb-6 text-center ">
+                  Leader Board
+                </h1>
+          
+                <div className="mb-8 overflow-hidden overflow-x-auto">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Top 10 Rankings</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Rank</TableHead>
+                            <TableHead>Rank Change</TableHead>
+                            <TableHead>User Name</TableHead>
+                            <TableHead>Profit/Loss $</TableHead>
+                            <TableHead>Win Ratio (%)</TableHead>
+                            <TableHead>Trades</TableHead>
+                            <TableHead>Risk</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {topAssets.map((asset) => (
+                            <TableRow key={asset.rank}>
+                              <TableCell>{asset.rank}</TableCell>
+
+                              {/* Here’s where we call the utility function */}
+                              <TableCell>{getRankChangeIndicator({ rankChange: asset.rankChange })}</TableCell>
+
+                              <TableCell>{asset.username}</TableCell>
+                              <TableCell className="text-emerald-600">
+                                {asset.profitLoss}
+                              </TableCell>
+                              <TableCell>{asset.winRate}</TableCell>
+                              <TableCell>{asset.trades}</TableCell>
+                              <TableCell>{asset.risk}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </Card>
+                </div>
+          
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <Card className='w-full'>
+                    <CardHeader>
+                      <CardTitle>Weekly Performance Comparison</CardTitle>
+                    </CardHeader>
+                    <ResponsiveContainer width="100%" height='400px'>
+                      <ChartContainer
+                        config={{
+                          gold: {
+                            label: "Gold Assets",
+                            color: "hsl(24, 100%, 50%)",
+                          },
+                          islamic: {
+                            label: "Finance Assets ",
+                            color: "hsl(16, 100%, 50%)",
+                          },
+                        }}
+                        className="h-[300px]"
+                      >
+                        <LineChart
+                          data={monthlyData}
+                          margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="month" />
+                          <YAxis />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Line
+                            type="monotone"
+                            dataKey="gold"
+                            stroke="var(--color-gold)"
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="islamic"
+                            stroke="var(--color-islamic)"
+                          />
+                        </LineChart>
+                      </ChartContainer>
+                    </ResponsiveContainer>
+                  </Card>
+          
+                  <Card className=' overflow-hidden w-full'>
+                    <CardHeader>
+                      <CardTitle>Weekly Asset Performance</CardTitle>
+                    </CardHeader>
+                    <ResponsiveContainer width="100%" height='400px'>
+                      <ChartContainer
+                        config={{
+                          performance: {
+                            label: "Performance Score",
+                            color: "hsl(24, 100%, 50%)",
+                          },
+                        }}
+                        className="h-[300px]"
+                      >
+                        <BarChart
+                          data={performanceData}
+                          layout="vertical"
+                          margin={{ top: 20, right: 20, bottom: 20, left: 100 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis type="number" />
+                          <YAxis type="category" dataKey="category" />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Bar dataKey="performance" fill="var(--color-performance)" />
+                        </BarChart>
+                      </ChartContainer>
+                    </ResponsiveContainer>
+                  </Card>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+      </div>
+    </div>
   );
 }
