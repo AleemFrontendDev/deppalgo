@@ -16,12 +16,15 @@ const Register = () => {
 
   return (
     <div className='w-full min-h-screen grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20 p-5 md:p-10 sm:px-20'>
-        <div className='left-side bg-[#f15200] w-full h-full relative rounded-xl p-10 hidden md:block'>
+        <div className='left-side bg-[#f15200] w-full h-full relative rounded-xl p-10 hidden md:flex flex-col justify-between'>
             <h2 className='md:text-3xl lg:text-[40px] font-semibold text-white'>
                 Trade, track and manage brokers on DeepAlgo. 
             </h2>
+            <h3 className='mb-14 text-3xl font-light text-white'>
+                Trade More. Train the AI. Watch Your Profits Grow.
+            </h3>
             <Image src={lines} alt='' width={100}  height={100} className='absolute left-0 bottom-0 w-full filter invert opacity-30' />
-            <h4 className='text-4xl font-bold text-white absolute bottom-10 capitalize'>
+            <h4 className='text-4xl font-bold text-white  bottom-10 capitalize'>
                 stocks. forex. bonds. indices. commodities
             </h4>
         </div>

@@ -36,13 +36,16 @@ const Login = () => {
 
     return (
         <div className='w-full h-screen flex items-center justify-center'>
-           <div className='fixed top-0 w-full h-[100px] flex items-center justify-center'>
+           <div className='fixed top-0 w-full flex flex-col gap-2 items-center justify-center py-2'>
                 <div className='flex items-center gap-2'>
                     <div className='bg-[#f15200] rounded-lg overflow-hidden p-1'>
                         <Image src={logo} alt='Logo' width={70} height={50} className='bg-[#da9b7b] rounded-lg' />
                     </div>
                     <h2 className='text-[#333] text-2xl font-semibold'>DeepAlgo</h2>
                 </div>
+                <p className='font-light text-[#333]'>
+                    Automated. Intelligent. Profitable. DeepAlgo Trading
+                </p>
            </div>
 
            <div className='relative w-[450px] border-2 p-5 rounded-lg '>
