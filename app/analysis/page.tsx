@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from 'react'
-import lines from "@/public/lines.svg"
-import Image from 'next/image';
 
 import {
   Line,
@@ -26,79 +24,108 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { TradingControls } from '@/components/trading-controls';
+import { TradingControls } from '@/components/TraidingControls/trading-controls';
 
 const topAssets = [
   {
     rank: 1,
-    name: "Jack",
-    value: "$1925.30",
-    change: "+2.3%",
-    type: "120",
+    rankChange: "No Change",
+    username: "DeepAlgo",
+    profitLoss: "£15,500",
+    winRate: "90%",
+    trades: 130,
+    risk: "1%"
   },
   {
     rank: 2,
-    name: "Smith",
-    value: "$452.80",
-    change: "+1.8%",
-    type: "98",
+    rankChange: "-2",
+    username: "TraderX",
+    profitLoss: "£12,350",
+    winRate: "88%",
+    trades: 120,
+    risk: "2%"
   },
   {
     rank: 3,
-    name: "Dorsel",
-    value: "$185.40",
-    change: "+1.5%",
-    type: "67",
+    rankChange: "+1",
+    username: "PipMaster",
+    profitLoss: "£9,270",
+    winRate: "86%",
+    trades: 98,
+    risk: "2%"
   },
   {
     rank: 4,
-    name: "Sukuk",
-    value: "$325.60",
-    change: "+1.2%",
-    type: "49",
+    rankChange: "+2",
+    username: "FXWarrior",
+    profitLoss: "£7,880",
+    winRate: "85%",
+    trades: 110,
+    risk: "1%"
   },
   {
     rank: 5,
-    name: "Jamson J.",
-    value: "$78.90",
-    change: "+1.0%",
-    type: "77",
+    rankChange: "+1",
+    username: "MarketMogul",
+    profitLoss: "£5,560",
+    winRate: "84%",
+    trades: 85,
+    risk: "3%"
   },
   {
     rank: 6,
-    name: "Alex",
-    value: "$245.70",
-    change: "+0.9%",
-    type: "127",
+    rankChange: "-2",
+    username: "TradeTitan",
+    profitLoss: "£4,800",
+    winRate: "83%",
+    trades: 75,
+    risk: "1%"
   },
   {
     rank: 7,
-    name: "Alesa M.",
-    value: "$1920.50",
-    change: "+0.7%",
-    type: "85",
+    rankChange: "-1",
+    username: "BullBear",
+    profitLoss: "£3,750",
+    winRate: "82%",
+    trades: 60,
+    risk: "2%"
   },
   {
     rank: 8,
-    name: "Saim jacob",
-    value: "$156.30",
-    change: "+0.6%",
-    type: "103",
+    rankChange: "+2",
+    username: "RiskReaper",
+    profitLoss: "£2,100",
+    winRate: "81%",
+    trades: 55,
+    risk: "3%"
   },
   {
     rank: 9,
-    name: "Good Jone",
-    value: "$45.20",
-    change: "+0.4%",
-    type: "106",
+    rankChange: "+2",
+    username: "TrendHunter",
+    profitLoss: "£1,250",
+    winRate: "81%",
+    trades: 45,
+    risk: "1%"
   },
   {
     rank: 10,
-    name: "Gorge",
-    value: "$89.40",
-    change: "+0.3%",
-    type: "107",
+    rankChange: "+3",
+    username: "AlgoKing",
+    profitLoss: "-£500",
+    winRate: "80.50%",
+    trades: 40,
+    risk: "3%"
   },
+  {
+    rank: 11,
+    rankChange: "-3",
+    username: "VolatilityViper",
+    profitLoss: "-£1,200",
+    winRate: "80.20%",
+    trades: 30,
+    risk: "1%"
+  }
 ];
 
 const monthlyData = [
@@ -126,6 +153,43 @@ const chartData = [
   { month: "JunGolde", desktop: 214, mobile: 140 },
 ];
 
+
+interface RankChangeIndicatorProps {
+  rankChange: string;
+}
+
+function getRankChangeIndicator({ rankChange }: RankChangeIndicatorProps) {
+  if (rankChange.startsWith("+")) {
+    const numericPart = rankChange.replace("+", "").trim();
+    return (
+      <span className='text-emerald-600' style={{ display: "inline-flex", alignItems: "center" }}>
+        &#x25B2; 
+        &nbsp;{numericPart}
+      </span>
+    );
+  } 
+  else if (rankChange.startsWith("-")) {
+    const numericPart = rankChange.replace("-", "").trim();
+    return (
+      <span style={{ color: "red", display: "inline-flex", alignItems: "center" }}>
+        &#x25BC;
+        &nbsp;{numericPart}
+      </span>
+    );
+  } 
+  else if (rankChange.includes("No Change") || rankChange === "0") {
+    return (
+      <span className='text-emerald-600' style={{ display: "inline-flex", alignItems: "center" }}>
+        No Change
+      </span>
+    );
+  } 
+  else {
+    return <span>{rankChange}</span>;
+  }
+}
+
+
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -145,19 +209,20 @@ export default function Dashboard() {
   return (
     <>
     <div className='flex items-center justify-between px-12'>
-      <TradingControls />   <div className='pr-[5px]'><button
-          className={`w-40 h-12 border-2 border-[#e9d4b9] rounded-lg ${
+      <TradingControls />   
+    <div className='pr-[5px]'>
+        <button
+          className={`w-40 h-12 border-2 rounded-lg ${
             isActive ? "bg-red-500 text-white" : "bg-green-500 text-white"
           }`}
           onClick={clickHandler}
         >
-          {isActive ? "Stop" : "Start"}
+          {isActive ? "Stop Traiding" : "Start Traiding"}
         </button></div>
     </div>
     <div className='my-10 flex flex-col gap-10 items-center justify-center'>
         <Card>
           <CardContent className='p-0'>
-            {isActive ? (
               <div className="p-6 bg-[#fafafa] min-h-screen">
               <h1 className="text-3xl font-bold mb-6 text-center ">
                 Leader Board
@@ -173,22 +238,29 @@ export default function Dashboard() {
                       <TableHeader>
                         <TableRow>
                           <TableHead>Rank</TableHead>
-                          <TableHead>Name</TableHead>
+                          <TableHead>Rank Change</TableHead>
+                          <TableHead>User Name</TableHead>
                           <TableHead>Profit/Loss $</TableHead>
                           <TableHead>Win Ratio (%)</TableHead>
                           <TableHead>Trades</TableHead>
+                          <TableHead>Risk</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {topAssets.map((asset) => (
                           <TableRow key={asset.rank}>
                             <TableCell>{asset.rank}</TableCell>
-                            <TableCell>{asset.name}</TableCell>
-                            <TableCell>{asset.value}</TableCell>
+
+                            {/* Here’s where we call the utility function */}
+                            <TableCell>{getRankChangeIndicator({ rankChange: asset.rankChange })}</TableCell>
+
+                            <TableCell>{asset.username}</TableCell>
                             <TableCell className="text-emerald-600">
-                              {asset.change}
+                              {asset.profitLoss}
                             </TableCell>
-                            <TableCell>{asset.type}</TableCell>
+                            <TableCell>{asset.winRate}</TableCell>
+                            <TableCell>{asset.trades}</TableCell>
+                            <TableCell>{asset.risk}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -269,14 +341,6 @@ export default function Dashboard() {
                 </Card>
               </div>
             </div>
-            ) : (
-              <div className="relative flex items-center justify-center h-screen w-[1250px] text-lg text-gray-500">
-                Press start button to display analysis
-                <div className='hello absolute bottom-0 w-full -z-10'>
-                    <Image src={lines} alt='' width={100}  height={100} className='w-full h-full object-cover filter invert opacity-50' />
-                </div>
-              </div>
-            )}
           </CardContent>
         </Card>
       </div>
